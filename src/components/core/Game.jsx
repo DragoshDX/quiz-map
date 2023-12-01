@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, Home } from '.';
+import { Map, Controls } from '.';
 import { StoreProvider } from '../store';
 
 export const Game = () => {
@@ -10,7 +10,7 @@ export const Game = () => {
       </div>
 
       <div className="mt-7">
-        <Home></Home>
+        <Controls></Controls>
       </div>
     </StoreProvider>
   );

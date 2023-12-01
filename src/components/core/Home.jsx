@@ -1,13 +1,9 @@
-'use client';
-import { increment } from '@/store';
+import { startGame } from '@/store';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const count = useSelector(({ game }) => {
-    return game.count;
-  });
 
   return (
     <div className="text-gray-50 lg:w-1/2 mx-auto flex flex-col gap-11 lg:gap-4">
@@ -29,10 +25,10 @@ export const Home = () => {
           title="Start"
           className="uppercase text-center px-2 py-1 bg-gray-50 shadow-md rounded text-gray-400 font-bold"
           onClick={() => {
-            dispatch(increment());
+            dispatch(startGame());
           }}
         >
-          Start {count}
+          Start
         </button>
       </div>
     </div>
