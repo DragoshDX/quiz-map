@@ -3,14 +3,15 @@ import React from 'react';
 export const Map = () => {
   return (
     <svg
-      baseprofile="tiny"
+      baseProfile="tiny"
+      length="auto"
       height="auto"
       stroke="#ffffff"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       version="1.2"
-      viewbox="0 0 1000 705"
+      viewBox="0 0 1000 705"
       xmlns="http://www.w3.org/2000/svg"
       className="map-svg"
     >
