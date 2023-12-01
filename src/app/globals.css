@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.map-svg {
+  @apply fill-gray-500;
+}
