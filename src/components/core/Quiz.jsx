@@ -1,3 +1,5 @@
+import { shuffle } from 'lodash';
+import { units } from '@/data';
 import React from 'react';
 
 export const Quiz = () => {
@@ -12,15 +14,21 @@ export const Quiz = () => {
       </div>
 
       <ul className="grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-5">
-        <li>
-          <button
-            title="Nume judet"
-            type="button"
-            className="bg-primary-500 text-gray-50 font-bold py-3 transition-colors shadow-primary-200 shadow-inner w-full block rounded-lg hover:shadow-primary-400 hover:bg-primary-800"
-          >
-            nume judet
-          </button>
-        </li>
+        {shuffle(units)
+          .slice(0, 4)
+          .map(({ id, name }) => {
+            return (
+              <li key={id}>
+                <button
+                  title="Nume judet"
+                  type="button"
+                  className="bg-primary-500 text-gray-50 font-bold py-3 transition-colors shadow-primary-200 shadow-inner w-full block rounded-lg hover:shadow-primary-400 hover:bg-primary-800"
+                >
+                  {name}
+                </button>
+              </li>
+            );
+          })}
       </ul>
     </div>
   );
