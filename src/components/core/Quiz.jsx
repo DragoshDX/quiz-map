@@ -1,10 +1,15 @@
-import { shuffle } from 'lodash';
 import { useMediaQuery } from 'usehooks-ts';
-import { units } from '@/data';
 import React from 'react';
 import { Timer } from '.';
+import { useDispatch, useSelector } from 'react-redux';
+import { shuffle } from 'lodash';
+import { tryGuess } from '@/store';
 
 export const Quiz = () => {
+  const dispatch = useDispatch();
+  const choices = useSelector(({ game }) => {
+    return game.choices;
+  });
   const matches = useMediaQuery('(min-width: 1024px)');
   const positionValueClass = matches ? '' : 'absolute';
 
@@ -21,21 +26,24 @@ export const Quiz = () => {
       </div>
 
       <ul className="grid lg:grid-cols-2 gap-y-3 lg:gap-x-8 lg:gap-y-5 px-6 lg:px-0">
-        {shuffle(units)
-          .slice(0, 4)
-          .map(({ id, name }) => {
-            return (
-              <li key={id}>
-                <button
-                  title="Nume judet"
-                  type="button"
-                  className="button  button-warning"
-                >
-                  {name}
-                </button>
-              </li>
-            );
-          })}
+        {shuffle(choices).map((quizChoice) => {
+          const { name, id } = quizChoice;
+
+          return (
+            <li key={id}>
+              <button
+                title={name}
+                type="button"
+                className="button button-choice"
+                onClick={() => {
+                  dispatch(tryGuess({ id }));
+                }}
+              >
+                {name}
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

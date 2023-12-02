@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --tw-accent1-500: theme('colors.accent1.500');
+  --tw-accent2-500: theme('colors.accent2.500');
+}
+
 .map-svg {
   @apply fill-gray-500;
+}
+
+.map-svg path {
+  @apply hover:fill-gray-800 cursor-pointer;
 }

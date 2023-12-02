@@ -1,6 +1,6 @@
-import { startGame } from '@/store';
+import { startGame, startRound } from '@/store';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -26,6 +26,7 @@ export const Home = () => {
           className="uppercase text-center px-2 py-1 bg-gray-50 shadow-md rounded text-gray-400 font-bold"
           onClick={() => {
             dispatch(startGame());
+            dispatch(startRound());
           }}
         >
           Start
