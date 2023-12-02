@@ -1,9 +1,10 @@
 import { units } from '@/data';
 import { createSlice } from '@reduxjs/toolkit';
 
+const unitsLength = units.length;
+
 export const initialState = {
   gameState: {
-    won: false,
     started: false,
   },
   guesses: [
@@ -71,6 +72,7 @@ export const gameSlice = createSlice({
   reducers: {
     startGame: (state) => {
       state.gameState.started = true;
+      state.guesses.length = 0;
     },
     startRound: (state) => {
       const proxyUnits = units.slice();
@@ -104,7 +106,9 @@ export const gameSlice = createSlice({
             : state.guesses,
       };
 
-      newState.choices = Array(3)
+      const arrayLengthDiff = unitsLength - newState.guesses.length;
+
+      newState.choices = Array(arrayLengthDiff <= 4 ? arrayLengthDiff : 3)
         .fill('')
         .map(() => {
           const randomUnit = getRandomEntry(proxyUnits, newState);
@@ -112,11 +116,22 @@ export const gameSlice = createSlice({
           return randomUnit;
         });
 
-      if (state.correctAnswer.id === guessedId) {
+      if (state.correctAnswer.id === guessedId && arrayLengthDiff > 4) {
         newState.correctAnswer = getRandomEntry(proxyUnits, newState);
       }
 
-      newState.choices.push(newState.correctAnswer);
+      if (arrayLengthDiff > 4) {
+        newState.choices.push(newState.correctAnswer);
+      } else {
+        newState.correctAnswer =
+          newState.choices[Math.floor(Math.random() * newState.choices.length)];
+      }
+
+      if (arrayLengthDiff === 0) {
+        newState.gameState = {
+          started: false,
+        };
+      }
 
       return newState;
     },
