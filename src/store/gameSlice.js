@@ -7,45 +7,7 @@ export const initialState = {
   gameState: {
     started: false,
   },
-  guesses: [
-    'ROU122',
-    'ROU123',
-    'ROU124',
-    'ROU126',
-    'ROU127',
-    'ROU128',
-    'ROU129',
-    'ROU130',
-    'ROU131',
-    'ROU132',
-    'ROU133',
-    'ROU276',
-    'ROU277',
-    'ROU278',
-    'ROU280',
-    'ROU287',
-    'ROU294',
-    'ROU295',
-    'ROU296',
-    'ROU297',
-    'ROU298',
-    'ROU299',
-    'ROU300',
-    'ROU301',
-    'ROU302',
-    'ROU303',
-    'ROU304',
-    'ROU305',
-    'ROU306',
-    'ROU307',
-    'ROU308',
-    'ROU309',
-    'ROU310',
-    'ROU311',
-    'ROU312',
-    'ROU313',
-    'ROU314',
-  ],
+  guesses: [],
   choices: [],
   correctAnswer: null,
 };
@@ -132,6 +94,8 @@ export const gameSlice = createSlice({
         newState.gameState = {
           started: false,
         };
+        newState.correctAnswer = null;
+        newState.guesses = [];
       }
 
       return newState;
