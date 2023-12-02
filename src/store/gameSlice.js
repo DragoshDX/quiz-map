@@ -12,7 +12,8 @@ export const initialState = {
 };
 
 const getRandomEntry = (units, state) => {
-  let randomUnit = units[Math.floor(Math.random() * units.length)];
+  const randomIndex = Math.floor(Math.random() * units.length);
+  let randomUnit = units[randomIndex];
 
   if (
     state.guesses.includes(randomUnit.id) ||
@@ -20,6 +21,8 @@ const getRandomEntry = (units, state) => {
   ) {
     return getRandomEntry(units, state);
   }
+
+  units.splice(randomIndex, 1);
 
   return randomUnit;
 };
@@ -32,48 +35,52 @@ export const gameSlice = createSlice({
       state.gameState.started = true;
     },
     startRound: (state) => {
-      const randomUnit = getRandomEntry(units, state);
+      const proxyUnits = units.slice();
+      const randomUnit = getRandomEntry(proxyUnits, state);
 
-      state.correctAnswer = randomUnit;
-      state.choices.push(randomUnit);
+      const newState = {
+        ...state,
+        correctAnswer: randomUnit,
+        choices: [
+          randomUnit,
+          ...Array(3)
+            .fill('')
+            .map(() => {
+              const randomUnit = getRandomEntry(proxyUnits, state);
 
-      Array(3)
-        .fill('_')
-        .forEach(() => {
-          const randomUnit = getRandomEntry(units, state);
+              return randomUnit;
+            }),
+        ],
+      };
 
-          state.choices.push(randomUnit);
-        });
+      return newState;
     },
     tryGuess: (state, action) => {
       const guessedId = action.payload.id;
+      const proxyUnits = units.slice();
+      const newState = {
+        ...state,
+        guesses:
+          state.correctAnswer.id === guessedId
+            ? [...state.guesses, guessedId]
+            : state.guesses,
+      };
+
+      newState.choices = Array(3)
+        .fill('')
+        .map(() => {
+          const randomUnit = getRandomEntry(proxyUnits, newState);
+
+          return randomUnit;
+        });
 
       if (state.correctAnswer.id === guessedId) {
-        state.guesses.push(guessedId);
-
-        const randomUnit = getRandomEntry(units, state);
-        state.choices.length = 0;
-        state.correctAnswer = randomUnit;
-        state.choices.push(randomUnit);
-
-        Array(3)
-          .fill('_')
-          .forEach(() => {
-            const randomUnit = getRandomEntry(units, state);
-
-            state.choices.push(randomUnit);
-          });
+        newState.correctAnswer = getRandomEntry(proxyUnits, newState);
       }
 
-      state.choices.length = 0;
-      state.choices.push(state.correctAnswer);
-      Array(3)
-        .fill('_')
-        .forEach(() => {
-          const randomUnit = getRandomEntry(units, state);
+      newState.choices.push(newState.correctAnswer);
 
-          state.choices.push(randomUnit);
-        });
+      return newState;
     },
   },
 });
