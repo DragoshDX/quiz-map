@@ -72,6 +72,7 @@ export const gameSlice = createSlice({
   reducers: {
     startGame: (state) => {
       state.gameState.started = true;
+      state.correctAnswer = null;
       state.guesses.length = 0;
     },
     startRound: (state) => {
