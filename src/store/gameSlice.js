@@ -16,7 +16,7 @@ const getRandomEntry = (units, state) => {
 
   if (
     state.guesses.includes(randomUnit.id) ||
-    state.correctAnswer.id === randomUnit.id
+    (state.correctAnswer !== null && state.correctAnswer.id === randomUnit.id)
   ) {
     return getRandomEntry(units, state);
   }
