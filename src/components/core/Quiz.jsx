@@ -29,7 +29,7 @@ export const Quiz = () => {
                 <button
                   title="Nume judet"
                   type="button"
-                  className="bg-primary-500 text-gray-50 font-bold py-3 transition-colors shadow-primary-200 shadow-inner w-full block rounded-lg hover:shadow-primary-400 hover:bg-primary-800"
+                  className="button  button-warning"
                 >
                   {name}
                 </button>

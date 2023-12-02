@@ -107,5 +107,47 @@ module.exports = {
         { values: theme('textShadow') },
       );
     }),
+    plugin(function ({ addUtilities, theme }) {
+      const newUtilities = {
+        '.button': {
+          'font-weight': 'bold',
+          padding: '0.75rem', // corresponds to py-3
+          transition: 'colors',
+          'box-shadow': 'inset 0 0 0 0',
+          width: '100%',
+          display: 'block',
+          'border-radius': '0.5rem', // corresponds to rounded-lg
+          color: theme('colors.white'),
+        },
+        '.button-choice': {
+          'background-color': theme('colors.primary.500'),
+          'box-shadow': `0 2px 4px 0 ${theme('colors.primary.200')}`,
+          '&:hover': {
+            'background-color': theme('colors.primary.800'),
+            'box-shadow': `0 4px 8px 0 ${theme('colors.primary.400')}`,
+          },
+        },
+        '.button-success': {
+          'background-color': theme('colors.accent2.500'),
+          'box-shadow': `0 2px 4px 0 ${theme('colors.accent2.900')}`,
+          '&:hover': {
+            'background-color': theme('colors.accent2.900'),
+            'box-shadow': `0 4px 8px 0 ${theme('colors.accent2.400')}`,
+          },
+          'pointer-events': 'none',
+        },
+        '.button-warning': {
+          'background-color': theme('colors.accent1.500'),
+          'box-shadow': `0 2px 4px 0 ${theme('colors.accent1.200')}`,
+          '&:hover': {
+            'background-color': theme('colors.accent1.800'),
+            'box-shadow': `0 4px 8px 0 ${theme('colors.accent1.400')}`,
+          },
+          'pointer-events': 'none',
+        },
+      };
+
+      addUtilities(newUtilities, ['responsive', 'hover']);
+    }),
   ],
 };
